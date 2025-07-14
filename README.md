@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Weatherly - Aplicación de Clima con Next.js
 
-## Getting Started
+Weatherly es una aplicación web sencilla que permite consultar el clima actual de cualquier ciudad usando la API pública de WeatherAPI.com.  
+Fue desarrollada con Next.js y TypeScript, e incluye pruebas unitarias con Jest y React Testing Library.
 
-First, run the development server:
+---
 
-```bash
+## Funcionalidades
+
+- Búsqueda de clima por nombre de ciudad.
+- Muestra temperatura actual, humedad y descripción del clima.
+- Manejo de errores para ciudades no válidas o problemas de red.
+- Interfaz limpia y simple, con validación básica del input.
+
+---
+
+## Tecnologías
+
+- Next.js (React framework)
+- TypeScript
+- WeatherAPI.com (API pública de clima)
+- Jest + React Testing Library (para pruebas unitarias)
+- Tailwind CSS (estilos)
+
+---
+
+## Instalación y ejecución
+
+1. Clona este repositorio:
+
+   ```bash
+   git clone https://github.com/tu-usuario/weatherly.git
+   cd weatherly
+   Instala dependencias:
+   ```
+
+bash
+Copy
+Edit
+npm install
+Crea un archivo .env.local en la raíz con tu API key de WeatherAPI:
+
+ini
+Copy
+Edit
+NEXT_PUBLIC_WEATHERAPI_KEY=tu_api_key_aqui
+Ejecuta la aplicación en modo desarrollo:
+
+bash
+Copy
+Edit
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Abre tu navegador en http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Uso
+Ingresa el nombre de una ciudad en el campo de búsqueda.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Presiona el ícono de búsqueda o Enter.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Consulta la temperatura, humedad y descripción del clima.
 
-## Learn More
+Si la ciudad no existe o hay un error, verás un mensaje de error.
 
-To learn more about Next.js, take a look at the following resources:
+Pruebas Unitarias
+Para ejecutar las pruebas unitarias y ver el coverage:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+bash
+Copy
+Edit
+npm test
+npm run coverage
+El proyecto está configurado para tener un coverage mínimo del 80%. Actualmente, el componente principal WeatherForm tiene cobertura completa.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Estructura
+/src/lib/weatherApi.ts — Función para llamar a la API de clima.
 
-## Deploy on Vercel
+/src/components/WeatherForm.tsx — Formulario de búsqueda con validaciones.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+/src/components/WeatherCard.tsx — Tarjeta para mostrar resultados del clima.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+/src/reducers/weatherReducer.ts — Reducer para manejar estados (cargando, error, éxito).
+
+/src/tests — Pruebas unitarias con Jest y React Testing Library.
+
+Enlaces útiles
+
+- https://www.weatherapi.com/
+
+- https://nextjs.org/
+
+- https://testing-library.com/docs/react-testing-library/intro/
+
+- https://jestjs.io/
+# Weatherly
