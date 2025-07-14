@@ -1,0 +1,110 @@
+/* ========== VARIABLES ========== */
+:root {
+  --color-bg: #2E75B6;
+  --color-text: #FFFFFF;
+  --color-text-dark: #2C3E50;
+  --color-button: #F9D65C;
+  --color-button-hover: #F4C430;
+  --color-input-border: #AED6F1;
+  --color-input-bg: #EAF2F8;
+  --color-placeholder: #95A5A6;
+  --color-card-bg: #F2F9FF;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --font-family: 'Poppins', 'Inter', 'Nunito', 'Roboto', sans-serif;
+}
+
+/* ========== GLOBAL STYLES ========== */
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+/* ========== MAIN CONTAINER ========== */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+/* ========== LOGO ========== */
+.logo-container {
+  border: 2px solid;
+  padding: 4px;
+  border-radius: 8px;
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 255 0.5);
+}
+
+/* ========== FORM ========== */
+.weather-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-card-bg);
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--color-shadow);
+  flex-wrap: wrap; /* para mejor responsividad */
+}
+
+.weather-input {
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  border-radius: 6px;
+  outline: none;
+  font-size: 1rem;
+  color: var(--color-text-dark);
+  width: 200px;
+}
+
+.weather-input::placeholder {
+  color: var(--color-placeholder);
+}
+
+/* ========== BUTTONS ========== */
+.weather-form button {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+/* Botón buscar (lupa) */
+.search-button {
+  background-color: var(--color-button);
+  border: none;
+  padding: 0.4rem 0.7rem;
+  color: var(--color-text-dark);
+}
+
+.search-button:hover {
+  background-color: var(--color-button-hover);
+}
+
+/* Botón limpiar (X) */
+.clear-button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.2rem;
+  padding: 0.2rem 0.5rem;
+  color: var(--color-text-dark);
+}
+
+.clear-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
