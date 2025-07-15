@@ -1,5 +1,6 @@
 export interface WeatherData {
   city: string;
+  country: string;
   temperature: number;
   humidity: number;
   description: string;
@@ -7,6 +8,9 @@ export interface WeatherData {
 
 interface OpenWeatherItem {
   name: string;
+  sys: {
+    country: string;
+  };
   main: {
     temp: number;
     humidity: number;
@@ -23,17 +27,25 @@ export async function fetchWeatherList(city: string): Promise<WeatherData[]> {
   )}&units=metric&appid=${apiKey}`;
 
   const res = await fetch(url);
-
   if (!res.ok) {
     throw new Error("Failed to fetch weather data.");
   }
 
   const data = await res.json();
 
-  return data.list.map((item: OpenWeatherItem) => ({
-    city: item.name,
-    temperature: item.main.temp,
-    humidity: item.main.humidity,
-    description: item.weather[0].description,
-  }));
+  // Casteo explícito a la estructura esperada
+  const items: OpenWeatherItem[] = data.list;
+
+  return items
+    .filter(
+      (item) =>
+        item.name && item.sys?.country && item.main && item.weather?.length
+    )
+    .map((item) => ({
+      city: item.name,
+      country: item.sys.country,
+      temperature: item.main.temp,
+      humidity: item.main.humidity,
+      description: item.weather[0].description,
+    }));
 }

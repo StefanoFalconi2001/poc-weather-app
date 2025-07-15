@@ -6,6 +6,7 @@ interface WeatherListProps {
 }
 
 export default function WeatherList({ weather }: WeatherListProps) {
+  console.log("Weather data received:", weather);
   return (
     <div className="weather-list scrollable-weather-list">
       {weather.map((data, index) => (
