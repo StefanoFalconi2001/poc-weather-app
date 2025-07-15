@@ -1,29 +1,39 @@
 # Weatherly - Weather Application with Next.js
 
-## Description:
+## Description
 
-Weatherly is a simple web application that allows users to search and view the current weather of any city using the public WeatherAPI.com service.  
-The app is built with Next.js and TypeScript and includes unit tests using Jest and React Testing Library.
+Weatherly is a web application that allows users to search and view the current weather of one or more cities using the OpenWeatherMap API.  
+The app is built with Next.js and TypeScript and includes unit tests using Jest and React Testing Library.  
+It features a scrollable weather list, reusable components, and an organized architecture with services and utilities.
 
-## Features:
+---
+
+## Features
 
 - Search weather by city name.
 - Displays:
-  - Current temperature
+  - City name
+  - Temperature (°C)
   - Humidity
-  - Weather description (e.g., "Sunny", "Cloudy")
+  - Weather condition description
+- Shows multiple results if available (e.g., similar city names).
 - Handles errors for invalid cities or connection issues.
 - Clean user interface with basic validation.
+- Scrollable weather list with custom scrollbar styling.
 
-## Technologies:
+---
+
+## Technologies
 
 - Next.js (React Framework)
 - TypeScript
-- Tailwind CSS (Styling)
-- WeatherAPI.com (API Provider)
-- Jest & React Testing Library (Testing)
+- OpenWeatherMap API (Weather data provider)
+- Jest & React Testing Library (Unit testing)
+- Tailwind CSS + Custom CSS for styling
 
-## Installation & Setup:
+---
+
+## Installation & Setup
 
 1. Clone the repository:
    git clone https://github.com/your-username/weatherly.git
@@ -32,42 +42,66 @@ The app is built with Next.js and TypeScript and includes unit tests using Jest 
 2. Install dependencies:
    npm install
 
-3. Create a `.env.local` file at the root with your API key:
-   NEXT_PUBLIC_WEATHERAPI_KEY=your_api_key_here
+3. Create a `.env.local` file in the root directory:
+   NEXT_PUBLIC_API_KEY=your_openweathermap_api_key_here
 
 4. Start the development server:
    npm run dev
 
-5. Visit http://localhost:3000 in your browser.
+5. Visit the app:
+   Open your browser and go to: http://localhost:3000
 
-## Usage:
+---
 
-- Enter the name of a city in the input field.
-- Click the search icon or press Enter.
-- Weather data (temperature, humidity, description) will be displayed.
-- If the city is invalid or there's a network error, an error message appears.
+## Usage
 
-## Running Tests:
+- Type the name of a city in the search bar.
+- Press Enter or click the 🔍 icon.
+- View weather data of matching cities in a scrollable list.
+- Click "X" to clear the input.
+- If no cities are found or there's a problem, an error message will appear.
 
-- Run all tests:
+---
+
+## Running Tests
+
+- Run all unit tests:
   npm test
 
-- View test coverage:
+- Run tests with coverage report:
   npm run coverage
 
-  (Minimum 80% coverage is required; WeatherForm currently has 100%)
+  ✅ The app is configured to maintain minimum 80% test coverage.  
+  ✅ `WeatherForm` currently has 100% test coverage.
 
-## Project Structure:
+---
 
-- /src/lib/weatherApi.ts - Weather API fetching logic.
-- /src/components/WeatherForm.tsx - Input form with search and validation.
-- /src/components/WeatherCard.tsx - Displays weather results.
-- /src/reducers/weatherReducer.ts - Manages loading, success, and error states.
-- /src/tests - Unit test files.
+## Project Structure
 
-## Useful Links:
+/src  
+ ├─ /components  
+ │ ├─ WeatherForm.tsx  
+ │ ├─ WeatherCard.tsx  
+ │ └─ WeatherList.tsx  
+ ├─ /reducers  
+ │ └─ weatherReducer.ts  
+ ├─ /services  
+ │ └─ weatherService.ts  
+ ├─ /utilities  
+ │ ├─ searchingUtilities.ts  
+ │ └─ formUtilities.ts  
+ └─ /tests  
+ └─ weatherForm.test.tsx
 
-- https://www.weatherapi.com/
-- https://nextjs.org/
-- https://testing-library.com/docs/react-testing-library/intro/
-- https://jestjs.io/
+---
+
+## Useful Links
+
+- OpenWeatherMap: https://openweathermap.org/api
+- Next.js Docs: https://nextjs.org/
+- React Testing Library: https://testing-library.com/docs/react-testing-library/intro/
+- Jest: https://jestjs.io/
+
+---
+
+Enjoy your weather search experience with **Weatherly** ☀️🌧️❄️🌪️

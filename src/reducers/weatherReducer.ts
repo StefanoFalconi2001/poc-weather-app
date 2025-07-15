@@ -1,17 +1,14 @@
+import { WeatherData } from "@/services/weatherService";
+
 export interface WeatherState {
-  weather: null | {
-    city: string;
-    temperature: number;
-    humidity: number;
-    description: string;
-  };
+  weather: WeatherData[] | null;
   loading: boolean;
   error: string;
 }
 
 export type WeatherAction =
   | { type: "FETCH_START" }
-  | { type: "FETCH_SUCCESS"; payload: WeatherState["weather"] }
+  | { type: "FETCH_SUCCESS"; payload: WeatherData[] }
   | { type: "FETCH_FAILURE"; payload: string }
   | { type: "CLEAR_WEATHER" };
 
@@ -24,7 +21,12 @@ export const weatherReducer = (
       return { ...state, loading: true, error: "", weather: null };
 
     case "FETCH_SUCCESS":
-      return { ...state, loading: false, weather: action.payload };
+      return {
+        ...state,
+        loading: false,
+        weather: action.payload,
+        error: "",
+      };
 
     case "FETCH_FAILURE":
       return { ...state, loading: false, error: action.payload };

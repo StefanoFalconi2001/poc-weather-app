@@ -3,12 +3,12 @@ import Image from "next/image";
 import WeatherForm from "@/components/WeatherForm";
 import { weatherReducer, WeatherState } from "@/reducers/weatherReducer";
 import { useReducer } from "react";
-import WeatherCard from "@/components/WeatherCard";
 import { handleSearch } from "@/utilities/searchingUtilities";
+import WeatherList from "@/components/WeatherList";
 
 export default function Home() {
   const initialState: WeatherState = {
-    weather: null,
+    weather: [],
     loading: false,
     error: "",
   };
@@ -32,8 +32,8 @@ export default function Home() {
       {state.error && <p style={{ color: "red" }}>{state.error}</p>}
 
       {state.weather && (
-        <div>
-          <WeatherCard data={state.weather}></WeatherCard>
+        <div className="weather-results-container">
+          <WeatherList weather={state.weather}></WeatherList>
         </div>
       )}
     </main>

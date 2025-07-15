@@ -1,4 +1,4 @@
-import { fetchWeather } from "@/services/weatherService";
+import { fetchWeatherList } from "@/services/weatherService";
 import { WeatherAction } from "@/reducers/weatherReducer";
 
 export const handleSearch = async (
@@ -8,7 +8,7 @@ export const handleSearch = async (
   dispatch({ type: "FETCH_START" });
 
   try {
-    const data = await fetchWeather(city);
+    const data = await fetchWeatherList(city);
     dispatch({ type: "FETCH_SUCCESS", payload: data });
   } catch (error: unknown) {
     if (error instanceof Error) {

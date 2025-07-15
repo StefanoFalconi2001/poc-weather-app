@@ -5,22 +5,35 @@ export interface WeatherData {
   description: string;
 }
 
-export async function fetchWeather(city: string): Promise<WeatherData> {
+interface OpenWeatherItem {
+  name: string;
+  main: {
+    temp: number;
+    humidity: number;
+  };
+  weather: {
+    description: string;
+  }[];
+}
+
+export async function fetchWeatherList(city: string): Promise<WeatherData[]> {
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-  const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(city)}&aqi=yes`;
+  const url = `https://api.openweathermap.org/data/2.5/find?q=${encodeURIComponent(
+    city
+  )}&units=metric&appid=${apiKey}`;
 
   const res = await fetch(url);
 
   if (!res.ok) {
-    throw new Error("No se pudo obtener el clima.");
+    throw new Error("Failed to fetch weather data.");
   }
 
   const data = await res.json();
 
-  return {
-    city: data.location.name,
-    temperature: data.current.temp_c,
-    humidity: data.current.humidity,
-    description: data.current.condition.text,
-  };
+  return data.list.map((item: OpenWeatherItem) => ({
+    city: item.name,
+    temperature: item.main.temp,
+    humidity: item.main.humidity,
+    description: item.weather[0].description,
+  }));
 }

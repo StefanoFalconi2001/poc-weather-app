@@ -29,11 +29,9 @@ describe("WeatherForm", () => {
 
     const form = screen.getByTestId("weather-form");
 
-    // Submit with empty input
     fireEvent.submit(form);
     expect(mockSearch).not.toHaveBeenCalled();
 
-    // Submit with spaces only
     const input = screen.getByPlaceholderText(/enter city/i);
     fireEvent.change(input, { target: { value: "   " } });
     fireEvent.submit(form);
@@ -46,13 +44,11 @@ describe("WeatherForm", () => {
 
     const input = screen.getByPlaceholderText(/enter city/i);
 
-    // Type a city (button should appear)
     fireEvent.change(input, { target: { value: "Quito" } });
     expect(
       screen.getByRole("button", { name: /clear input/i })
     ).toBeInTheDocument();
 
-    // Click clear button clears input and focuses input
     fireEvent.click(screen.getByRole("button", { name: /clear input/i }));
     expect(input).toHaveValue("");
     expect(document.activeElement).toBe(input);
@@ -64,22 +60,18 @@ describe("WeatherForm", () => {
 
     const input = screen.getByPlaceholderText(/enter city/i);
 
-    // Initially no buttons visible
     expect(screen.queryByRole("button", { name: /search/i })).toBeNull();
     expect(screen.queryByRole("button", { name: /clear input/i })).toBeNull();
 
-    // Type city, buttons appear
     fireEvent.change(input, { target: { value: "Quito" } });
     expect(screen.getByRole("button", { name: /search/i })).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /clear input/i })
     ).toBeInTheDocument();
 
-    // Submit form to set lastSearchedCity
     const form = screen.getByTestId("weather-form");
     fireEvent.submit(form);
 
-    // Now buttons disappear (input equals last searched city)
     expect(screen.queryByRole("button", { name: /search/i })).toBeNull();
     expect(screen.queryByRole("button", { name: /clear input/i })).toBeNull();
   });
