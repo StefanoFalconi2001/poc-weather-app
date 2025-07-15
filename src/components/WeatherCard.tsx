@@ -1,4 +1,4 @@
-import { WeatherData } from "@/lib/weatherApi";
+import { WeatherData } from "@/services/weatherService";
 
 interface WeatherCardProps {
   data: WeatherData;

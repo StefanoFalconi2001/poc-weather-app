@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
+import { handleSubmit, handleClear } from "@/utilities/formUtilities";
 
 interface WeatherFormProps {
   onSearch: (city: string) => void;
@@ -12,23 +13,9 @@ export default function WeatherForm({ onSearch }: WeatherFormProps) {
 
   const [lastSearchedCity, setLastSearchedCity] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (city.trim() === "") return;
-
-    onSearch(city.trim());
-    setLastSearchedCity(city.trim());
-  };
-
-  const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setCity("");
-    inputRef.current?.focus();
-  };
-
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={(e) => handleSubmit(e, city, onSearch, setLastSearchedCity)}
       data-testid="weather-form"
       className="weather-form"
     >
@@ -47,7 +34,7 @@ export default function WeatherForm({ onSearch }: WeatherFormProps) {
         {city.length > 0 && city.trim() !== lastSearchedCity && (
           <button
             type="button"
-            onClick={handleClear}
+            onClick={(e) => handleClear(e, setCity, inputRef)}
             aria-label="Clear input"
             className="clear-button"
           >

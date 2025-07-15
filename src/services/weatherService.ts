@@ -6,7 +6,7 @@ export interface WeatherData {
 }
 
 export async function fetchWeather(city: string): Promise<WeatherData> {
-  const apiKey = "f8c32471e8a34ffba64190448251407"
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${encodeURIComponent(city)}&aqi=yes`;
 
   const res = await fetch(url);
