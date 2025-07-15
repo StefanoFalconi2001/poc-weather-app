@@ -50,9 +50,6 @@ export default function Home() {
       <WeatherForm onSearch={handleSearch} />
       {state.loading && <p>Loading...</p>}
       {state.error && <p style={{ color: "red" }}>{state.error}</p>}
-      {state.weather && (
-        <div>{/* Aquí irá tu WeatherCard cuando lo crees */}</div>
-      )}
 
       {state.weather && (
         <div>
