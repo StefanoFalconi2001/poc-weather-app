@@ -1,94 +1,92 @@
-# Weatherly - Aplicación de Clima con Next.js
+# Weatherly - Weather Application with Next.js
 
-Weatherly es una aplicación web sencilla que permite consultar el clima actual de cualquier ciudad usando la API pública de WeatherAPI.com.  
-Fue desarrollada con Next.js y TypeScript, e incluye pruebas unitarias con Jest y React Testing Library.
-
----
-
-## Funcionalidades
-
-- Búsqueda de clima por nombre de ciudad.
-- Muestra temperatura actual, humedad y descripción del clima.
-- Manejo de errores para ciudades no válidas o problemas de red.
-- Interfaz limpia y simple, con validación básica del input.
+Weatherly is a simple web application that allows you to check the current weather of any city using the public WeatherAPI.com API.  
+It is built with Next.js and TypeScript, and includes unit tests with Jest and React Testing Library.
 
 ---
 
-## Tecnologías
+## Features
+
+- Search weather by city name.
+- Displays current temperature, humidity, and weather description.
+- Error handling for invalid cities or network issues.
+- Clean and simple interface with basic input validation.
+
+---
+
+## Technologies
 
 - Next.js (React framework)
 - TypeScript
-- WeatherAPI.com (API pública de clima)
-- Jest + React Testing Library (para pruebas unitarias)
-- Tailwind CSS (estilos)
+- WeatherAPI.com (public weather API)
+- Jest + React Testing Library (for unit testing)
+- Tailwind CSS (styling)
 
 ---
 
-## Instalación y ejecución
+## Installation and Running
 
-1. Clona este repositorio:
+1. Clone this repository:
 
    ```bash
-   git clone https://github.com/tu-usuario/weatherly.git
+   git clone https://github.com/your-username/weatherly.git
    cd weatherly
-   Instala dependencias:
+   Install dependencies:
    ```
 
 bash
 Copy
 Edit
 npm install
-Crea un archivo .env.local en la raíz con tu API key de WeatherAPI:
+Create a .env.local file at the root with your WeatherAPI key:
 
 ini
 Copy
 Edit
-NEXT_PUBLIC_WEATHERAPI_KEY=tu_api_key_aqui
-Ejecuta la aplicación en modo desarrollo:
+NEXT_PUBLIC_WEATHERAPI_KEY=your_api_key_here
+Run the development server:
 
 bash
 Copy
 Edit
 npm run dev
-Abre tu navegador en http://localhost:3000
+Open your browser at http://localhost:3000
 
-Uso
-Ingresa el nombre de una ciudad en el campo de búsqueda.
+Usage
+Enter the name of a city in the search field.
 
-Presiona el ícono de búsqueda o Enter.
+Press the search icon or hit Enter.
 
-Consulta la temperatura, humedad y descripción del clima.
+View the temperature, humidity, and weather description.
 
-Si la ciudad no existe o hay un error, verás un mensaje de error.
+If the city doesn't exist or an error occurs, an error message will be shown.
 
-Pruebas Unitarias
-Para ejecutar las pruebas unitarias y ver el coverage:
+Unit Tests
+To run unit tests and check coverage:
 
 bash
 Copy
 Edit
 npm test
 npm run coverage
-El proyecto está configurado para tener un coverage mínimo del 80%. Actualmente, el componente principal WeatherForm tiene cobertura completa.
+The project is configured to have at least 80% coverage. Currently, the main component WeatherForm has full coverage.
 
-Estructura
-/src/lib/weatherApi.ts — Función para llamar a la API de clima.
+Project Structure
+/src/lib/weatherApi.ts — Function to call the weather API.
 
-/src/components/WeatherForm.tsx — Formulario de búsqueda con validaciones.
+/src/components/WeatherForm.tsx — Search form with validations.
 
-/src/components/WeatherCard.tsx — Tarjeta para mostrar resultados del clima.
+/src/components/WeatherCard.tsx — Card to display weather results.
 
-/src/reducers/weatherReducer.ts — Reducer para manejar estados (cargando, error, éxito).
+/src/reducers/weatherReducer.ts — Reducer to manage states (loading, error, success).
 
-/src/tests — Pruebas unitarias con Jest y React Testing Library.
+/src/tests — Unit tests with Jest and React Testing Library.
 
-Enlaces útiles
+Useful Links
+WeatherAPI.com
 
-- https://www.weatherapi.com/
+Next.js
 
-- https://nextjs.org/
+React Testing Library
 
-- https://testing-library.com/docs/react-testing-library/intro/
-
-- https://jestjs.io/
-# Weatherly
+Jest
