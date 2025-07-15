@@ -1,92 +1,73 @@
 # Weatherly - Weather Application with Next.js
 
-Weatherly is a simple web application that allows you to check the current weather of any city using the public WeatherAPI.com API.  
-It is built with Next.js and TypeScript, and includes unit tests with Jest and React Testing Library.
+## Description:
 
----
+Weatherly is a simple web application that allows users to search and view the current weather of any city using the public WeatherAPI.com service.  
+The app is built with Next.js and TypeScript and includes unit tests using Jest and React Testing Library.
 
-## Features
+## Features:
 
 - Search weather by city name.
-- Displays current temperature, humidity, and weather description.
-- Error handling for invalid cities or network issues.
-- Clean and simple interface with basic input validation.
+- Displays:
+  - Current temperature
+  - Humidity
+  - Weather description (e.g., "Sunny", "Cloudy")
+- Handles errors for invalid cities or connection issues.
+- Clean user interface with basic validation.
 
----
+## Technologies:
 
-## Technologies
-
-- Next.js (React framework)
+- Next.js (React Framework)
 - TypeScript
-- WeatherAPI.com (public weather API)
-- Jest + React Testing Library (for unit testing)
-- Tailwind CSS (styling)
+- Tailwind CSS (Styling)
+- WeatherAPI.com (API Provider)
+- Jest & React Testing Library (Testing)
 
----
+## Installation & Setup:
 
-## Installation and Running
-
-1. Clone this repository:
-
-   ```bash
+1. Clone the repository:
    git clone https://github.com/your-username/weatherly.git
    cd weatherly
-   Install dependencies:
-   ```
 
-bash
-Copy
-Edit
-npm install
-Create a .env.local file at the root with your WeatherAPI key:
+2. Install dependencies:
+   npm install
 
-ini
-Copy
-Edit
-NEXT_PUBLIC_WEATHERAPI_KEY=your_api_key_here
-Run the development server:
+3. Create a `.env.local` file at the root with your API key:
+   NEXT_PUBLIC_WEATHERAPI_KEY=your_api_key_here
 
-bash
-Copy
-Edit
-npm run dev
-Open your browser at http://localhost:3000
+4. Start the development server:
+   npm run dev
 
-Usage
-Enter the name of a city in the search field.
+5. Visit http://localhost:3000 in your browser.
 
-Press the search icon or hit Enter.
+## Usage:
 
-View the temperature, humidity, and weather description.
+- Enter the name of a city in the input field.
+- Click the search icon or press Enter.
+- Weather data (temperature, humidity, description) will be displayed.
+- If the city is invalid or there's a network error, an error message appears.
 
-If the city doesn't exist or an error occurs, an error message will be shown.
+## Running Tests:
 
-Unit Tests
-To run unit tests and check coverage:
+- Run all tests:
+  npm test
 
-bash
-Copy
-Edit
-npm test
-npm run coverage
-The project is configured to have at least 80% coverage. Currently, the main component WeatherForm has full coverage.
+- View test coverage:
+  npm run coverage
 
-Project Structure
-/src/lib/weatherApi.ts — Function to call the weather API.
+  (Minimum 80% coverage is required; WeatherForm currently has 100%)
 
-/src/components/WeatherForm.tsx — Search form with validations.
+## Project Structure:
 
-/src/components/WeatherCard.tsx — Card to display weather results.
+- /src/lib/weatherApi.ts - Weather API fetching logic.
+- /src/components/WeatherForm.tsx - Input form with search and validation.
+- /src/components/WeatherCard.tsx - Displays weather results.
+- /src/reducers/weatherReducer.ts - Manages loading, success, and error states.
+- /src/tests - Unit test files.
 
-/src/reducers/weatherReducer.ts — Reducer to manage states (loading, error, success).
+## Useful Links:
 
-/src/tests — Unit tests with Jest and React Testing Library.
-
-Useful Links
-WeatherAPI.com
-
-Next.js
-
-React Testing Library
-
-Jest
+- https://www.weatherapi.com/
+- https://nextjs.org/
+- https://testing-library.com/docs/react-testing-library/intro/
+- https://jestjs.io/
