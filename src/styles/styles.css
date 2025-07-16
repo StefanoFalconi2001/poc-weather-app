@@ -12,7 +12,6 @@
   --font-family: 'Poppins', 'Inter', 'Nunito', 'Roboto', sans-serif;
 }
 
-/* Layout principal */
 html, body {
   margin: 0;
   padding: 0;
@@ -27,7 +26,6 @@ html, body {
   padding: 2rem;
 }
 
-/* Contenedor general */
 main {
   display: flex;
   flex-direction: column;
@@ -38,7 +36,6 @@ main {
   max-width: 900px;
 }
 
-/* Logo */
 .logo-container {
   border: 2px solid;
   padding: 4px;
@@ -49,7 +46,6 @@ main {
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
 
-/* Formulario */
 .weather-form {
   display: flex;
   align-items: center;
@@ -62,7 +58,6 @@ main {
   flex-wrap: wrap;
 }
 
-/* Campo de entrada */
 .weather-input {
   padding: 0.5rem 0.75rem;
   border: 2px solid var(--color-input-border);
@@ -78,7 +73,6 @@ main {
   color: var(--color-placeholder);
 }
 
-/* Botones */
 .weather-form button {
   font-family: var(--font-family);
   font-size: 1rem;
@@ -111,7 +105,6 @@ main {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* Lista de resultados */
 .scrollable-weather-list {
   max-height: 400px;
   overflow-y: auto;
@@ -126,14 +119,12 @@ main {
   box-sizing: border-box;
 }
 
-/* Separadores entre tarjetas */
 .weather-list > *:not(:last-child) {
   border-bottom: 1px solid #ddd;
   padding-bottom: 1rem;
   margin-bottom: 1rem;
 }
 
-/* Scrollbar personalizada */
 .scrollable-weather-list::-webkit-scrollbar {
   width: 8px;
 }
@@ -149,21 +140,18 @@ main {
   background: #555;
 }
 
-/* Contenedor de resultados */
 .weather-results-container {
   max-width: 600px;
   margin: 0 auto;
   margin-top: 2rem;
 }
 
-/* País junto a la ciudad */
 .country {
   font-weight: normal;
   font-style: italic;
   color: var(--color-text-dark);
 }
 
-/* Mensaje de error */
 .error-message {
   background-color: #ffe6e6;
   color: #b30000;
