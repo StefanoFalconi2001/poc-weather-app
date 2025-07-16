@@ -12,6 +12,7 @@ export const handleSearch = async (
     dispatch({ type: "FETCH_SUCCESS", payload: data });
   } catch (error: unknown) {
     if (error instanceof Error) {
+      console.log("ERROR:", error);
       dispatch({ type: "FETCH_FAILURE", payload: error.message });
     } else {
       dispatch({ type: "FETCH_FAILURE", payload: "Unknown error" });

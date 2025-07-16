@@ -1,18 +1,19 @@
 "use client";
+
 import Image from "next/image";
-import WeatherForm from "@/components/WeatherForm";
-import { weatherReducer, WeatherState } from "@/reducers/weatherReducer";
 import { useReducer } from "react";
-import { handleSearch } from "@/utilities/searchingUtilities";
+import WeatherForm from "@/components/WeatherForm";
 import WeatherList from "@/components/WeatherList";
+import { weatherReducer, WeatherState } from "@/reducers/weatherReducer";
+import { handleSearch } from "@/utilities/searchingUtilities";
+
+const initialState: WeatherState = {
+  weather: [],
+  loading: false,
+  error: "",
+};
 
 export default function Home() {
-  const initialState: WeatherState = {
-    weather: [],
-    loading: false,
-    error: "",
-  };
-
   const [state, dispatch] = useReducer(weatherReducer, initialState);
 
   return (
@@ -27,13 +28,26 @@ export default function Home() {
         />
       </div>
 
-      <WeatherForm onSearch={(city) => handleSearch(city, dispatch)} />
-      {state.loading && <p>Loading...</p>}
-      {state.error && <p style={{ color: "red" }}>{state.error}</p>}
+      <WeatherForm
+        onSearch={(city) => handleSearch(city, dispatch)}
+        dispatch={dispatch}
+      />
 
-      {state.weather && (
+      {state.loading && <p>Loading...</p>}
+
+      {state.error && (
+        <div className="error-message">
+          <p>{state.error}</p>
+        </div>
+      )}
+
+      {!state.loading && !state.error && state.weather.length === 0 && (
+        <p>No results found.</p>
+      )}
+
+      {state.weather.length > 0 && (
         <div className="weather-results-container">
-          <WeatherList weather={state.weather}></WeatherList>
+          <WeatherList weather={state.weather} />
         </div>
       )}
     </main>

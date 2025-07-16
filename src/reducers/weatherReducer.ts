@@ -1,7 +1,7 @@
 import { WeatherData } from "@/services/weatherService";
 
 export interface WeatherState {
-  weather: WeatherData[] | null;
+  weather: WeatherData[];
   loading: boolean;
   error: string;
 }
@@ -18,7 +18,7 @@ export const weatherReducer = (
 ): WeatherState => {
   switch (action.type) {
     case "FETCH_START":
-      return { ...state, loading: true, error: "", weather: null };
+      return { ...state, loading: true, error: "", weather: [] };
 
     case "FETCH_SUCCESS":
       return {
@@ -29,10 +29,11 @@ export const weatherReducer = (
       };
 
     case "FETCH_FAILURE":
+      console.log("Dispatched error:", action.payload);
       return { ...state, loading: false, error: action.payload };
 
     case "CLEAR_WEATHER":
-      return { ...state, weather: null, error: "" };
+      return { ...state, weather: [], error: "" };
 
     default:
       return state;
