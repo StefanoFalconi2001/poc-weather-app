@@ -1,20 +1,53 @@
 "use client";
 
 import Image from "next/image";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 import WeatherForm from "@/components/WeatherForm";
 import WeatherList from "@/components/WeatherList";
-import { weatherReducer, WeatherState } from "@/reducers/weatherReducer";
-import { handleSearch } from "@/utilities/searchingUtilities";
+import { weatherReducer } from "@/reducers/weatherReducer";
+import { WeatherData, saveWeatherResult } from "@/services/weatherService";
+import { handleSearch } from "@/utilities/formUtilities";
 
+export interface WeatherState {
+  weather: WeatherData[];
+  loading: boolean;
+  error: string;
+  selected: Set<string>;
+  savedWeathers: WeatherData[];
+}
+
+// Define initialState aquí:
 const initialState: WeatherState = {
   weather: [],
   loading: false,
   error: "",
+  selected: new Set<string>(),
+  savedWeathers: [],
 };
 
 export default function Home() {
   const [state, dispatch] = useReducer(weatherReducer, initialState);
+  const [selectedWeather, setSelectedWeather] = useState<WeatherData[]>([]);
+  const search = handleSearch(dispatch);
+
+  const saveSelectedWeather = async () => {
+    if (selectedWeather.length === 0) {
+      alert("Please select at least one item to save.");
+      return;
+    }
+
+    try {
+      await Promise.all(selectedWeather.map((w) => saveWeatherResult(w)));
+      alert("Selected weather saved successfully!");
+      setSelectedWeather([]);
+    } catch (error) {
+      if (error instanceof Error) {
+        alert("Error saving selected weather data: " + error.message);
+      } else {
+        alert("Error saving selected weather data: unknown error");
+      }
+    }
+  };
 
   return (
     <main>
@@ -22,19 +55,20 @@ export default function Home() {
         <Image
           src="/weatherlyLogo.png"
           alt="Weatherly Logo"
-          width={200}
-          height={60}
+          width={400}
+          height={100}
           priority
         />
       </div>
 
       <WeatherForm
-        onSearch={(city) => handleSearch(city, dispatch)}
+        onSearch={search}
         dispatch={dispatch}
+        onSaveSelected={saveSelectedWeather}
+        showSavedButton={true}
       />
 
       {state.loading && <p>Loading...</p>}
-
       {state.error && (
         <div className="error-message">
           <p>{state.error}</p>
@@ -46,9 +80,10 @@ export default function Home() {
       )}
 
       {state.weather.length > 0 && (
-        <div className="weather-results-container">
-          <WeatherList weather={state.weather} />
-        </div>
+        <WeatherList
+          weather={state.weather}
+          onSelectionChange={setSelectedWeather}
+        />
       )}
     </main>
   );
