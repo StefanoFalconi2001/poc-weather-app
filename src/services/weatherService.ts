@@ -1,9 +1,11 @@
 export interface WeatherData {
+  _id?: string;
   city: string;
   country: string;
   temperature: number;
   humidity: number;
   description: string;
+  createdAt?: string;
 }
 
 interface OpenWeatherItem {
@@ -33,7 +35,6 @@ export async function fetchWeatherList(city: string): Promise<WeatherData[]> {
 
   const data = await res.json();
 
-  // Casteo explícito a la estructura esperada
   const items: OpenWeatherItem[] = data.list;
 
   return items
@@ -48,4 +49,18 @@ export async function fetchWeatherList(city: string): Promise<WeatherData[]> {
       humidity: item.main.humidity,
       description: item.weather[0].description,
     }));
+}
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
+export async function saveWeatherResult(data: WeatherData): Promise<void> {
+  const response = await fetch(`${BASE_URL}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to save weather data.");
+  }
 }

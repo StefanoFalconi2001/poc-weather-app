@@ -10,13 +10,14 @@ It features a scrollable weather list, reusable components, and an organized arc
 
 ## Features
 
-- Search weather by city name.
+- Search weather by city name with instant search on input change.
 - Displays:
-  - City name
+  - City name and country code
   - Temperature (°C)
   - Humidity
   - Weather condition description
 - Shows multiple results if available (e.g., similar city names).
+- Clear button to reset input and weather results.
 - Handles errors for invalid cities or connection issues.
 - Clean user interface with basic validation.
 - Scrollable weather list with custom scrollbar styling.
@@ -56,9 +57,9 @@ It features a scrollable weather list, reusable components, and an organized arc
 ## Usage
 
 - Type the name of a city in the search bar.
-- Press Enter or click the 🔍 icon.
+- Search triggers automatically as you type (no need to press enter).
 - View weather data of matching cities in a scrollable list.
-- Click "X" to clear the input.
+- Click "X" to clear the input and also clear the weather results.
 - If no cities are found or there's a problem, an error message will appear.
 
 ---

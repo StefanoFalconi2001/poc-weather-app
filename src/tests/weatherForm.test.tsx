@@ -1,78 +1,65 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import WeatherForm from "@/components/WeatherForm";
+import { fetchWeatherList } from "@/services/weatherService";
 
-describe("WeatherForm", () => {
-  test("Render inputs and buttons correctly", () => {
-    const mockSearch = jest.fn();
-    render(<WeatherForm onSearch={mockSearch} />);
+// Mocks global fetch
+global.fetch = jest.fn();
 
-    const input = screen.getByPlaceholderText(/enter city/i);
-    expect(input).toBeInTheDocument();
+describe("fetchWeatherList test suite", () => {
+  const mockApiResponse = {
+    list: [
+      {
+        name: "Quito",
+        sys: { country: "EC" },
+        main: { temp: 22, humidity: 60 },
+        weather: [{ description: "clear sky" }],
+      },
+    ],
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  test("Search when the form is submitted", () => {
-    const mockSearch = jest.fn();
-    render(<WeatherForm onSearch={mockSearch} />);
+  test("Fetches and formats weather data correctly", async () => {
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => mockApiResponse,
+    });
 
-    const input = screen.getByPlaceholderText(/enter city/i);
-    fireEvent.change(input, { target: { value: "Quito" } });
-
-    const form = screen.getByTestId("weather-form");
-    fireEvent.submit(form);
-
-    expect(mockSearch).toHaveBeenCalledWith("Quito");
+    const result = await fetchWeatherList("Quito");
+    expect(result).toEqual([
+      {
+        city: "Quito",
+        country: "EC",
+        temperature: 22,
+        humidity: 60,
+        description: "clear sky",
+      },
+    ]);
   });
 
-  test("Does not search when input is empty or whitespace", () => {
-    const mockSearch = jest.fn();
-    render(<WeatherForm onSearch={mockSearch} />);
+  test("Throws error on failed request", async () => {
+    (fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
 
-    const form = screen.getByTestId("weather-form");
-
-    fireEvent.submit(form);
-    expect(mockSearch).not.toHaveBeenCalled();
-
-    const input = screen.getByPlaceholderText(/enter city/i);
-    fireEvent.change(input, { target: { value: "   " } });
-    fireEvent.submit(form);
-    expect(mockSearch).not.toHaveBeenCalled();
+    await expect(fetchWeatherList("Quito")).rejects.toThrow(
+      "Failed to fetch weather data."
+    );
   });
 
-  test("Clear button appears and works correctly", () => {
-    const mockSearch = jest.fn();
-    render(<WeatherForm onSearch={mockSearch} />);
+  test("Filters out invalid items", async () => {
+    const badApiResponse = {
+      list: [
+        { name: "", main: {}, weather: [] }, // invalid
+        ...mockApiResponse.list,
+      ],
+    };
 
-    const input = screen.getByPlaceholderText(/enter city/i);
+    (fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => badApiResponse,
+    });
 
-    fireEvent.change(input, { target: { value: "Quito" } });
-    expect(
-      screen.getByRole("button", { name: /clear input/i })
-    ).toBeInTheDocument();
-
-    fireEvent.click(screen.getByRole("button", { name: /clear input/i }));
-    expect(input).toHaveValue("");
-    expect(document.activeElement).toBe(input);
-  });
-
-  test("Search button appears only when input is changed and different from last searched city", () => {
-    const mockSearch = jest.fn();
-    render(<WeatherForm onSearch={mockSearch} />);
-
-    const input = screen.getByPlaceholderText(/enter city/i);
-
-    expect(screen.queryByRole("button", { name: /search/i })).toBeNull();
-    expect(screen.queryByRole("button", { name: /clear input/i })).toBeNull();
-
-    fireEvent.change(input, { target: { value: "Quito" } });
-    expect(screen.getByRole("button", { name: /search/i })).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /clear input/i })
-    ).toBeInTheDocument();
-
-    const form = screen.getByTestId("weather-form");
-    fireEvent.submit(form);
-
-    expect(screen.queryByRole("button", { name: /search/i })).toBeNull();
-    expect(screen.queryByRole("button", { name: /clear input/i })).toBeNull();
+    const result = await fetchWeatherList("Quito");
+    expect(result.length).toBe(1);
+    expect(result[0].city).toBe("Quito");
   });
 });
