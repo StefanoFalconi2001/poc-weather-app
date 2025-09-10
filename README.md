@@ -44,7 +44,7 @@ It features a scrollable weather list, reusable components, and an organized arc
    npm install
 
 3. Create a `.env.local` file in the root directory:
-   NEXT_PUBLIC_API_KEY=your_openweathermap_api_key_here
+   NEXT_PUBLIC_API_KEY=your_openweathermap_NEXT_PUBLIC_API_KEY_here
 
 4. Start the development server:
    npm run dev
