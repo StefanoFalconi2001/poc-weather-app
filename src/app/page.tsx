@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useReducer, useState, useEffect } from "react";
+import { useReducer, useState } from "react";
 import WeatherForm from "@/components/WeatherForm";
 import WeatherList from "@/components/WeatherList";
 import { weatherReducer } from "@/reducers/weatherReducer";
@@ -28,11 +28,6 @@ export default function Home() {
   const [state, dispatch] = useReducer(weatherReducer, initialState);
   const [selectedWeather, setSelectedWeather] = useState<WeatherData[]>([]);
   const search = handleSearch(dispatch);
-
-  useEffect(() => {
-    console.log("NEXT_PUBLIC_API_URL:", process.env.NEXT_PUBLIC_API_URL);
-    console.log("NEXT_PUBLIC_API_KEY:", process.env.NEXT_PUBLIC_API_KEY);
-  }, []);
 
   const saveSelectedWeather = async () => {
     if (selectedWeather.length === 0) {
@@ -73,6 +68,7 @@ export default function Home() {
       />
 
       {state.loading && <p>Loading...</p>}
+
       {state.error && (
         <div className="error-message">
           <p>{state.error}</p>
