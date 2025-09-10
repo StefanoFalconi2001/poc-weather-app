@@ -23,7 +23,7 @@ interface OpenWeatherItem {
 }
 
 export async function fetchWeatherList(city: string): Promise<WeatherData[]> {
-  const apiKey = process.env.API_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
   const url = `https://api.openweathermap.org/data/2.5/find?q=${encodeURIComponent(
     city
   )}&units=metric&appid=${apiKey}`;
