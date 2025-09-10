@@ -41,7 +41,7 @@ jobs:
       - name: Build Next.js App
         run: npm run build
         env:
-          API_KEY: ${{ secrets.API_KEY }}
+          NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
