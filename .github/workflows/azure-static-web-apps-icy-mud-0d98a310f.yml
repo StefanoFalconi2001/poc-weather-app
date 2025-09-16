@@ -43,9 +43,12 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      # 🔹 Establecer versión basada en SHA
-      - name: Set Frontend Version
-        run: echo "FRONTEND_VERSION=${GITHUB_SHA::7}" >> $GITHUB_ENV
+      # 🔹 Establecer versión basada en Changesets
+      - name: Generate Version from Changeset
+        run: |
+          npx changeset version
+          VERSION=$(node -p "require('./package.json').version")
+          echo "FRONTEND_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build Next.js App
         run: npm run build
