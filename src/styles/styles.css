@@ -355,3 +355,29 @@ button[disabled] {
 .delete-button:hover {
   background-color: #c0392b;
 }
+
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: var(--color-button);
+  color: var(--color-text-dark);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-family: var(--font-family);
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  z-index: 1000;
+}
+
+.back-button:hover {
+  background-color: var(--color-button-hover);
+  transform: translateY(-2px);
+}
+
+.back-button:active {
+  transform: translateY(0);
+}
