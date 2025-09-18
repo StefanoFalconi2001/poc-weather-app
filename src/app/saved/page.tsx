@@ -49,10 +49,19 @@ export default function SavedPage() {
     }
   };
 
+  const goHome = () => {
+    window.location.href = "/"; // Redirige a la página principal
+  };
+
   if (loading) return <p>Loading saved data...</p>;
 
   return (
     <main className="saved-page-container">
+      {/* Botón de retorno */}
+      <button className="back-button" onClick={goHome}>
+        ← Home
+      </button>
+
       <h1 className="saved-title">Saved results</h1>
 
       <section className="saved-list">
