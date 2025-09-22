@@ -1,0 +1,47 @@
+name: Deploy to QA
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy_qa:
+    runs-on: ubuntu-latest
+    environment: QA
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate Version from Changeset
+        run: |
+          npx changeset version
+          VERSION=$(node -p "require('./package.json').version")
+          echo "FRONTEND_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Build Next.js App
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
+
+      - name: Build and Deploy to QA
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ICY_MUD_0D98A310F }}
+          action: "upload"
+          app_location: "/"
+          api_location: "swa-db-connections"
+          output_location: "out"
+          deployment_environment: "QA"
+        env:
+          NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
