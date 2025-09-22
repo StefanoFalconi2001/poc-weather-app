@@ -1,51 +1,39 @@
 name: Azure Static Web Apps CI/CD - QA
 
 on:
-  workflow_dispatch: # Permite lanzar el workflow manualmente desde GitHub
-
+  workflow_dispatch: 
 jobs:
   build_and_deploy_qa:
     runs-on: ubuntu-latest
-    environment: QA # Esto hace que use el ambiente QA que creaste en GitHub
+    environment: QA 
     steps:
-      # 1️⃣ Traer el código del repositorio
       - name: Checkout repo
         uses: actions/checkout@v3
-
-      # 2️⃣ Configurar Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20"
-
-      # 3️⃣ Instalar dependencias
       - name: Install dependencies
         run: npm install
-
-      # 4️⃣ Generar la versión usando Changesets
       - name: Generate Version from Changeset
         run: |
           npx changeset version
           VERSION=$(node -p "require('./package.json').version")
           echo "FRONTEND_VERSION=$VERSION" >> $GITHUB_ENV
-
-      # 5️⃣ Construir la aplicación
       - name: Build Next.js App
         run: npm run build
         env:
           NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
-
-      # 6️⃣ Deploy a QA
       - name: Build and Deploy to QA
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_QA }}
           action: "upload"
-          app_location: "/" # carpeta de tu frontend
-          api_location: "swa-db-connections" # ruta de tu API
-          output_location: "out" # carpeta de build de Next.js
+          app_location: "/" 
+          api_location: "swa-db-connections"
+          output_location: "out" 
         env:
           NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
