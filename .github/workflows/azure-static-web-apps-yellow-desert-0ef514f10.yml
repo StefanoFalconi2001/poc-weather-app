@@ -19,13 +19,13 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Install Dependencies
+        run: npm install
       - name: Generate Version from Changeset
         run: |
           npx changeset version
           VERSION=$(node -p "require('./package.json').version")
           echo "FRONTEND_VERSION=$VERSION" >> $GITHUB_ENV
-      - name: Install Dependencies
-        run: npm install
       - name: Build App
         run: npm run build && npm run export
         env:
