@@ -27,7 +27,7 @@ jobs:
         run: npm run build
         env:
           NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_API_URL: ${{ env.NEXT_PUBLIC_API_URL }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
       - name: Build And Deploy
         id: builddeploy
@@ -42,3 +42,4 @@ jobs:
           NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
+
