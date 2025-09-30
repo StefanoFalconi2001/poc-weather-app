@@ -30,10 +30,7 @@ export default function Home() {
   const search = handleSearch(dispatch);
 
   const saveSelectedWeather = async () => {
-    if (selectedWeather.length === 0) {
-      alert("Please select at least one item to save.");
-      return;
-    }
+    if (selectedWeather.length === 0) return;
 
     try {
       await Promise.all(selectedWeather.map((w) => saveWeatherResult(w)));
@@ -67,7 +64,9 @@ export default function Home() {
         showSavedButton={true}
       />
 
-      {state.loading && <p>Loading...</p>}
+      {state.loading && (
+        <p className="loading-message">Loading weather data...</p>
+      )}
 
       {state.error && (
         <div className="error-message">
@@ -76,7 +75,7 @@ export default function Home() {
       )}
 
       {!state.loading && !state.error && state.weather.length === 0 && (
-        <p>No results found.</p>
+        <p className="loading-message">No results found.</p>
       )}
 
       {state.weather.length > 0 && (
@@ -85,6 +84,15 @@ export default function Home() {
           onSelectionChange={setSelectedWeather}
         />
       )}
+
+      {/* Botón Save Selected */}
+      <button
+        className="save-button"
+        onClick={saveSelectedWeather}
+        disabled={selectedWeather.length === 0}
+      >
+        Save selected
+      </button>
     </main>
   );
 }

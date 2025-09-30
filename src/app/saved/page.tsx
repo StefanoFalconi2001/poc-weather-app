@@ -13,56 +13,62 @@ type WeatherData = {
 export default function SavedPage() {
   const [savedWeather, setSavedWeather] = useState<WeatherData[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const urlApi = process.env.NEXT_PUBLIC_API_URL!;
 
   useEffect(() => {
     const fetchSavedWeather = async () => {
       setLoading(true);
+      setError(null);
       try {
         const res = await fetch(urlApi);
+        if (!res.ok) throw new Error("Failed to fetch saved weather data");
         const data = await res.json();
-        console.log(data);
         setSavedWeather(data);
       } catch (err) {
         console.error("Error al obtener datos guardados", err);
+        setError("Error loading saved data. Try again later.");
       } finally {
         setLoading(false);
       }
     };
 
     fetchSavedWeather();
-  }, []);
+  }, [urlApi]);
 
   const handleDelete = async (id: string) => {
     try {
-      const res = await fetch(`${urlApi}/${id}`, {
-        method: "DELETE",
-      });
-
+      const res = await fetch(`${urlApi}/${id}`, { method: "DELETE" });
       if (res.ok) {
         setSavedWeather((prev) => prev.filter((item) => item._id !== id));
       } else {
-        alert("Error deleting the results.");
+        alert("Error deleting the result.");
       }
     } catch (err) {
       console.error("Error deleting", err);
+      alert("Error deleting the result.");
     }
   };
 
   const goHome = () => {
-    window.location.href = "/"; // Redirige a la página principal
+    window.location.href = "/";
   };
-
-  if (loading) return <p>Loading saved data...</p>;
 
   return (
     <main className="saved-page-container">
-      {/* Botón de retorno */}
       <button className="back-button" onClick={goHome}>
         ← Home
       </button>
 
       <h1 className="saved-title">Saved results</h1>
+
+      {loading && <p className="loading-message">Loading saved data...</p>}
+      {error && <p className="error-message">{error}</p>}
+
+      {!loading && !error && savedWeather.length === 0 && (
+        <p className="loading-message">No saved results found.</p>
+      )}
 
       <section className="saved-list">
         {savedWeather.map((item) => (
@@ -77,8 +83,8 @@ export default function SavedPage() {
             </div>
 
             <button
-              onClick={() => handleDelete(item._id)}
               className="delete-button"
+              onClick={() => handleDelete(item._id)}
             >
               Delete
             </button>
