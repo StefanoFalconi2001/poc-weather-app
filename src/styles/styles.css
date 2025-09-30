@@ -381,3 +381,10 @@ button[disabled] {
 .back-button:active {
   transform: translateY(0);
 }
+
+.loading-message {
+  font-weight: bold;
+  text-align: center;
+  margin: 1rem 0;
+  color: var(--color-text-dark);
+}
