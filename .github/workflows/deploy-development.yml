@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Deploy to Development
 
 on:
   push:
@@ -90,3 +90,4 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_YELLOW_DESERT_0EF514F10 }}
           action: "close"
           app_location: "/"
+
