@@ -21,8 +21,8 @@ jobs:
 
       - name: Set Version
         run: |
-          if [ -n "${{ github.event.inputs.version }}" ]; then
-            VERSION="${{ github.event.inputs.version }}"
+          VERSION="${{ github.event.inputs.version || '' }}"
+          if [ -n "$VERSION" ]; then
             echo "Using provided version: $VERSION"
           else
             VERSION=$(node -p "require('./package.json').version")
