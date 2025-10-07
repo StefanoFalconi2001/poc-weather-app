@@ -12,7 +12,8 @@
     "coverage": "jest --coverage",
     "changeset": "changeset",
     "version": "changeset version",
-    "publish": "changeset publish"
+    "publish": "changeset publish",
+    "export": "next export" 
   },
   "dependencies": {
     "@fontsource/poppins": "^5.2.6",
