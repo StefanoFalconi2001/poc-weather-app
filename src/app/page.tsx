@@ -84,15 +84,6 @@ export default function Home() {
           onSelectionChange={setSelectedWeather}
         />
       )}
-
-      {/* Botón Save Selected */}
-      <button
-        className="save-button"
-        onClick={saveSelectedWeather}
-        disabled={selectedWeather.length === 0}
-      >
-        Save selected
-      </button>
     </main>
   );
 }
