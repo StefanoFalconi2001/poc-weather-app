@@ -40,10 +40,7 @@ jobs:
           git push origin main || echo "No changes to push"
 
       - name: Clean previous builds
-        run: |
-          rm -rf .next
-          rm -rf out
-          rm -rf out-qa
+        run: rm -rf .next
 
       - name: Build App for QA
         run: |
@@ -54,8 +51,7 @@ jobs:
 
       - name: Zip QA build output
         run: |
-          cd out-qa
-          zip -r ../frontend-qa-${{ env.FRONTEND_VERSION }}.zip .
+          zip -r frontend-qa-${{ env.FRONTEND_VERSION }}.zip .next
 
       - name: Upload QA build artifact
         uses: actions/upload-artifact@v4
