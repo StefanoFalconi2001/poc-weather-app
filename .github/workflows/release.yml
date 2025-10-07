@@ -48,7 +48,6 @@ jobs:
       - name: Build App for QA
         run: |
           NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL_QA }} npm run build
-          npm run export -- -o out-qa
         env:
           NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
