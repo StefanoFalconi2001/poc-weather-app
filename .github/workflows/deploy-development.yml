@@ -84,8 +84,8 @@ jobs:
 
       - name: Build App for QA
         run: |
-          rm -rf out-qa
-          NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL_QA }} npm run build
+          rm -rf .next-qa out-qa
+          NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL_QA }} npm run build -- --output .next-qa
           npm run export -- -o out-qa
         env:
           NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
