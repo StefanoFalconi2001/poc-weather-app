@@ -81,29 +81,29 @@ jobs:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_DEV }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
 
-      - name: Build App for QA/CUA
+      - name: Build App for QA
         run: npm run build
         env:
           NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_QA }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
 
-      - name: Zip QA/CUA build output
+      - name: Zip QA build output
         run: |
           cd out
           zip -r ../frontend-qa-${{ env.FRONTEND_VERSION }}.zip .
 
-      - name: Upload QA/CUA build artifact
+      - name: Upload QA build artifact
         uses: actions/upload-artifact@v4
         with:
           name: frontend-qa-${{ env.FRONTEND_VERSION }}
           path: frontend-qa-${{ env.FRONTEND_VERSION }}.zip
 
-      - name: Create GitHub Release for QA/CUA build
+      - name: Create GitHub Release for QA build
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ env.FRONTEND_VERSION }}-qa
-          name: Release QA/CUA ${{ env.FRONTEND_VERSION }} - ${{ github.run_number}}
+          name: Release QA ${{ env.FRONTEND_VERSION }} - ${{ github.run_number}}
           files: frontend-qa-${{ env.FRONTEND_VERSION }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
