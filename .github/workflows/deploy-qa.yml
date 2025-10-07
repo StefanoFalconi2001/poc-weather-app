@@ -5,6 +5,7 @@ on:
       version:
         description: "Version to deploy to QA"
         required: false
+
 jobs:
   build_and_deploy_qa:
     runs-on: ubuntu-latest
@@ -12,6 +13,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -23,14 +25,25 @@ jobs:
             VERSION="${{ github.event.inputs.version }}"
             echo "Using provided version: $VERSION"
           else
-            VERSION=$( node -p "require('./package.json').version")
-            echo "Version not provided. Using package.json version: $VERSION"
+            VERSION=$(node -p "require('./package.json').version")
+            echo "No input version provided. Using package.json version: $VERSION"
           fi
           echo "FRONTEND_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Download artifact from GitHub Release
         run: |
-          VERSION=${{ github.event.inputs.version }}
-          curl -L -o frontend-$VERSION.zip \
-            https://github.com/StefanoFalconi2001/poc-weather-app/releases/download/v$VERSION/frontend-$VERSION.zip
-          unzip frontend-$VERSION.zip -d ./out
+          echo "Downloading frontend-$FRONTEND_VERSION.zip from GitHub Releases..."
+          curl -L -o frontend-$FRONTEND_VERSION.zip \
+            https://github.com/StefanoFalconi2001/poc-weather-app/releases/download/v$FRONTEND_VERSION/frontend-$FRONTEND_VERSION.zip
+          unzip -o frontend-$FRONTEND_VERSION.zip -d ./out
+
+      - name: Deploy to QA via Azure Static Web Apps
+        id: deployqa
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ AZURE_STATIC_WEB_APPS_API_TOKEN_QA }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "/"
+          api_location: ""
+          output_location: "./out"
