@@ -1,6 +1,6 @@
 {
   "name": "weatherly",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -13,7 +13,7 @@
     "changeset": "changeset",
     "version": "changeset version",
     "publish": "changeset publish",
-    "export": "next export" 
+    "export": "next export"
   },
   "dependencies": {
     "@fontsource/poppins": "^5.2.6",
