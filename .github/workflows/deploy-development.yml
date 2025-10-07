@@ -39,21 +39,12 @@ jobs:
           git commit -m "chore: bump version package to $FRONTEND_VERSION [skip ci]" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
 
-      ###############################
-      # BUILD Y DEPLOY PARA DEV (igual que antes)
-      ###############################
       - name: Build App for DEV
         run: npm run build
         env:
           NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_DEV }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
-
-      - name: Inspect DEV build output
-        run: |
-          cd out
-          grep -r NEXT_PUBLIC_API_KEY .
-          grep -r NEXT_PUBLIC_API_URL_DEV .
 
       - name: Zip DEV build output
         run: |
@@ -90,9 +81,6 @@ jobs:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_DEV }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
 
-      ###############################
-      # BUILD PARA QA/CUA (solo artifact y release)
-      ###############################
       - name: Build App for QA/CUA
         run: npm run build
         env:
