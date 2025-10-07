@@ -82,17 +82,13 @@ jobs:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_DEV }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
 
-      # ---------------- Build QA ----------------
-      - name: Clean previous QA build
-        run: rm -rf .next out-qa
-
       - name: Build App for QA
         run: |
-          npm run build
+          rm -rf out-qa
+          NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL_QA }} npm run build
           npm run export -- -o out-qa
         env:
           NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_QA }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
 
       - name: Zip QA build output
