@@ -1,5 +1,13 @@
 # weatherly
 
+## 0.14.0
+
+### Minor Changes
+
+- 9746e12: Add search filter and styling improvements to Saved page
+- 5181e89: Deleting the Save Selected button
+- 17b97b6: Adding endpoints to the weather and messages for states
+
 ## 0.13.0
 
 ### Minor Changes
