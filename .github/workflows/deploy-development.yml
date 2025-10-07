@@ -21,8 +21,10 @@ jobs:
           persist-credentials: true
           submodules: true
           lfs: false
+
       - name: Install Dependencies
         run: npm install
+
       - name: Generate Version from Changeset
         run: |
           npx changeset version
@@ -37,31 +39,34 @@ jobs:
           git commit -m "chore: bump version package to $FRONTEND_VERSION [skip ci]" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
 
-      - name: Build App
+      ###############################
+      # BUILD Y DEPLOY PARA DEV (igual que antes)
+      ###############################
+      - name: Build App for DEV
         run: npm run build
         env:
           NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_QA }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_DEV }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
 
-      - name: Inspect build output
+      - name: Inspect DEV build output
         run: |
           cd out
           grep -r NEXT_PUBLIC_API_KEY .
-          grep -r NEXT_PUBLIC_API_URL_QA .
+          grep -r NEXT_PUBLIC_API_URL_DEV .
 
-      - name: Zip build output
+      - name: Zip DEV build output
         run: |
           cd out
           zip -r ../frontend-${{ env.FRONTEND_VERSION }}.zip .
 
-      - name: Upload build artifact
+      - name: Upload DEV build artifact
         uses: actions/upload-artifact@v4
         with:
           name: frontend-${{ env.FRONTEND_VERSION }}
           path: frontend-${{ env.FRONTEND_VERSION }}.zip
 
-      - name: Create GitHub Release
+      - name: Create GitHub Release for DEV build
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ env.FRONTEND_VERSION }}
@@ -70,7 +75,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build And Deploy
+      - name: Deploy to DEV
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
@@ -84,10 +89,40 @@ jobs:
           NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_DEV }}
           FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
+
+      ###############################
+      # BUILD PARA QA/CUA (solo artifact y release)
+      ###############################
+      - name: Build App for QA/CUA
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_QA }}
+          FRONTEND_VERSION: ${{ env.FRONTEND_VERSION }}
+
+      - name: Zip QA/CUA build output
+        run: |
+          cd out
+          zip -r ../frontend-qa-${{ env.FRONTEND_VERSION }}.zip .
+
+      - name: Upload QA/CUA build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-qa-${{ env.FRONTEND_VERSION }}
+          path: frontend-qa-${{ env.FRONTEND_VERSION }}.zip
+
+      - name: Create GitHub Release for QA/CUA build
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ env.FRONTEND_VERSION }}-qa
+          name: Release QA/CUA ${{ env.FRONTEND_VERSION }} - ${{ github.run_number}}
+          files: frontend-qa-${{ env.FRONTEND_VERSION }}.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
-
     name: Close Pull Request Job
     steps:
       - name: Close Pull Request
@@ -97,3 +132,5 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_YELLOW_DESERT_0EF514F10 }}
           action: "close"
           app_location: "/"
+          api_location: ""
+          output_location: "./out"
