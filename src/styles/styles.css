@@ -83,7 +83,9 @@ main {
   color: var(--color-placeholder);
 }
 
-.weather-form button {
+.weather-form button,
+.return-button,
+.saved-button {
   font-family: var(--font-family);
   font-size: 1rem;
   font-weight: bold;
@@ -94,12 +96,18 @@ main {
   padding: 0.5rem 1rem;
 }
 
-.search-button {
+.search-button,
+.save-button,
+.return-button,
+.saved-button {
   background-color: var(--color-button);
   color: var(--color-text-dark);
 }
 
-.search-button:hover {
+.search-button:hover,
+.save-button:hover,
+.return-button:hover,
+.saved-button:hover {
   background-color: var(--color-button-hover);
 }
 
@@ -112,34 +120,6 @@ main {
 
 .clear-button:hover {
   background-color: rgba(0, 0, 0, 0.05);
-}
-
-.save-button {
-  background-color: var(--color-button);
-  color: var(--color-text-dark);
-}
-
-.save-button:hover {
-  background-color: var(--color-button-hover);
-}
-
-.return-button,
-.saved-button {
-  background-color: var(--color-button);
-  border: none;
-  padding: 0.5rem 1rem;
-  color: var(--color-text-dark);
-  font-family: var(--font-family);
-  font-weight: bold;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.return-button:hover,
-.saved-button:hover {
-  background-color: var(--color-button-hover);
 }
 
 .weather-list {
@@ -156,18 +136,6 @@ main {
   box-shadow: 0 2px 8px var(--color-shadow);
 }
 
-.weather-list > div {
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-
-.weather-list > div:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-
 .weather-card {
   background-color: var(--color-card-bg);
   padding: 0.75rem 1rem;
@@ -177,12 +145,6 @@ main {
   align-items: center;
   gap: 1rem;
   flex-grow: 1;
-}
-
-.weather-checkbox {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
 }
 
 .weather-info h2 {
@@ -214,6 +176,18 @@ main {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.loading-message {
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--color-text-dark);
+  background-color: var(--color-card-bg);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px var(--color-shadow);
+  margin-top: 1rem;
+}
+
 button[disabled] {
   opacity: 0.5;
   cursor: not-allowed;
@@ -234,52 +208,6 @@ button[disabled] {
   background: #555;
 }
 
-/* ============================= */
-/* ESTILOS PARA SAVED / PAGE.TSX */
-/* ============================= */
-.saved-weather-table {
-  width: 100%;
-  max-width: 900px;
-  border-collapse: collapse;
-  background-color: var(--color-card-bg);
-  box-shadow: 0 2px 8px var(--color-shadow);
-  border-radius: 8px;
-  overflow: hidden;
-  margin-top: 1rem;
-}
-
-.saved-weather-table th,
-.saved-weather-table td {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border-bottom: 1px solid #ccc;
-  color: var(--color-text-dark);
-}
-
-.saved-weather-table th {
-  background-color: var(--color-input-border);
-  font-weight: bold;
-}
-
-.saved-weather-table tr:last-child td {
-  border-bottom: none;
-}
-
-.saved-weather-table td button {
-  background-color: var(--color-button);
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: var(--color-text-dark);
-  cursor: pointer;
-}
-
-.saved-weather-table td button:hover {
-  background-color: var(--color-button-hover);
-}
-
 .saved-page-container {
   display: flex;
   flex-direction: column;
@@ -296,11 +224,35 @@ button[disabled] {
   color: var(--color-text-dark);
 }
 
-.saved-list {
+.search-input {
   width: 100%;
+  max-width: 400px;
+  padding: 0.6rem 1rem;
+  border: 2px solid var(--color-input-border);
+  border-radius: 8px;
+  background-color: var(--color-input-bg);
+  font-size: 1rem;
+  color: var(--color-text-dark);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 1rem;
+}
+
+.search-input:focus {
+  border-color: var(--color-button);
+  box-shadow: 0 0 5px var(--color-button);
+}
+
+.search-input::placeholder {
+  color: var(--color-placeholder);
+}
+
+.saved-list {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1rem;
 }
 
 .saved-card {
@@ -308,10 +260,16 @@ button[disabled] {
   justify-content: space-between;
   align-items: flex-start;
   background-color: var(--color-card-bg);
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 1px 4px var(--color-shadow);
+  box-shadow: 0 2px 6px var(--color-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   flex-wrap: wrap;
+}
+
+.saved-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px var(--color-shadow);
 }
 
 .saved-details {
@@ -356,6 +314,7 @@ button[disabled] {
   background-color: #c0392b;
 }
 
+
 .back-button {
   position: fixed;
   top: 20px;
@@ -380,11 +339,4 @@ button[disabled] {
 
 .back-button:active {
   transform: translateY(0);
-}
-
-.loading-message {
-  font-weight: bold;
-  text-align: center;
-  margin: 1rem 0;
-  color: var(--color-text-dark);
 }

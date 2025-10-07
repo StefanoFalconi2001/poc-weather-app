@@ -14,6 +14,7 @@ export default function SavedPage() {
   const [savedWeather, setSavedWeather] = useState<WeatherData[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const urlApi = process.env.NEXT_PUBLIC_API_URL!;
 
@@ -51,12 +52,23 @@ export default function SavedPage() {
     }
   };
 
+  const filteredWeather = savedWeather.filter((item) =>
+    item.city.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const goHome = () => {
     window.location.href = "/";
   };
 
   return (
     <main className="saved-page-container">
+      <input
+        type="text"
+        placeholder="Search by city ..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="search-input"
+      />
       <button className="back-button" onClick={goHome}>
         ← Home
       </button>
@@ -71,7 +83,7 @@ export default function SavedPage() {
       )}
 
       <section className="saved-list">
-        {savedWeather.map((item) => (
+        {filteredWeather.map((item) => (
           <article key={item._id} className="saved-card">
             <div className="saved-details">
               <h2>{item.city}</h2>
