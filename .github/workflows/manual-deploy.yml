@@ -1,4 +1,4 @@
-name: Deploy to QA
+name: Manual Deploy to QA
 on:
   workflow_dispatch:
     inputs:
@@ -47,5 +47,3 @@ jobs:
           app_location: "/"
           api_location: ""
           output_location: "./out"
-
-
