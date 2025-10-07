@@ -47,3 +47,6 @@ jobs:
           app_location: "/"
           api_location: ""
           output_location: "./out"
+        env:
+          NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL_QA }}
