@@ -28,8 +28,9 @@ jobs:
           fi
           echo "FRONTEND_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-${{ env.FRONTEND_VERSION }}
-          path: ./out
+      - name: Download artifact from GitHub Release
+        run: |
+          VERSION=${{ github.event.inputs.version }}
+          curl -L -o frontend-$VERSION.zip \
+            https://github.com/StefanoFalconi2001/poc-weather-app/releases/download/v$VERSION/frontend-$VERSION.zip
+          unzip frontend-$VERSION.zip -d ./out
