@@ -1,5 +1,18 @@
 # weatherly
 
+## 0.17.0
+
+### Minor Changes
+
+- af4c9fa: Compiling the version with the correct variables
+- 9746e12: Add search filter and styling improvements to Saved page
+- 5181e89: Deleting the Save Selected button
+- 17b97b6: Adding endpoints to the weather and messages for states
+
+### Patch Changes
+
+- 648ba99: Fixing the compilation of environment variables
+
 ## 0.16.0
 
 ### Minor Changes
