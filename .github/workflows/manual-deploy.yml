@@ -32,10 +32,10 @@ jobs:
 
       - name: Download artifact from GitHub Release
         run: |
-          echo "Downloading frontend-$FRONTEND_VERSION.zip from GitHub Releases..."
-          curl -L -o frontend-$FRONTEND_VERSION.zip \
-            https://github.com/StefanoFalconi2001/poc-weather-app/releases/download/v$FRONTEND_VERSION/frontend-$FRONTEND_VERSION.zip
-          unzip -o frontend-$FRONTEND_VERSION.zip -d ./out
+          echo "Downloading frontend-qa-$FRONTEND_VERSION.zip from GitHub Releases..."
+          curl -L -o frontend-qa-$FRONTEND_VERSION.zip \
+            https://github.com/StefanoFalconi2001/poc-weather-app/releases/download/v$FRONTEND_VERSION-qa/frontend-qa-$FRONTEND_VERSION.zip
+          unzip -o frontend-qa-$FRONTEND_VERSION.zip -d ./out
 
       - name: Deploy to QA via Azure Static Web Apps
         id: deployqa
