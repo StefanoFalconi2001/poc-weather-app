@@ -25,19 +25,44 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Check for pending changesets
+        id: check_changesets
+        run: |
+          if ls .changeset/*.md 1> /dev/null 2>&1; then
+            echo "Changesets found."
+            echo "changesets_found=true" >> $GITHUB_ENV
+          else
+            echo "No changesets found."
+            echo "changesets_found=false" >> $GITHUB_ENV
+          fi
+
       - name: Generate Version from Changeset
+        if: env.changesets_found == 'true'
+        id: generate_version
         run: |
           npx changeset version
           VERSION=$(node -p "require('./package.json').version")
           echo "FRONTEND_VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Commit and Push Version Changes
+        if: env.changesets_found == 'true'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add package.json package-lock.json CHANGELOG.md
           git commit -m "chore: bump version package to $FRONTEND_VERSION [skip ci]" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
+
+      - name: Read current version
+        if: env.changesets_found == 'false'
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "FRONTEND_VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Clean up changesets
+        if: env.changesets_found == 'true'
+        run: |
+          rm -rf .changeset/*.md || true
 
       - name: Clean previous builds
         run: rm -rf .next
